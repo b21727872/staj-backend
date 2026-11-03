@@ -67,6 +67,7 @@ class ContentUpdate(BaseModel):
 class ContactRequest(BaseModel):
     name: str = ""
     email: str = ""
+    message: str = ""
 
 
 class ContactResponse(BaseModel):
@@ -194,7 +195,12 @@ def _throttle(ip: str) -> None:
         RATE_BUCKETS[ip] = hits
 
 
-def _remember_locally(name: str, email: str) -> None:
+def _message_text(value: str, limit: int) -> str:
+    text = value.replace("\r\n", "\n").replace("\r", "\n").strip()
+    return text[:limit]
+
+
+def _remember_locally(name: str, email: str, message: str) -> None:
     with LOCK:
         current: list[dict[str, str]] = []
         if INBOX_PATH.exists():
@@ -203,6 +209,7 @@ def _remember_locally(name: str, email: str) -> None:
             {
                 "name": name,
                 "email": email,
+                "message": message,
                 "created_at": datetime.now(timezone.utc).isoformat(),
             }
         )
@@ -212,7 +219,7 @@ def _remember_locally(name: str, email: str) -> None:
         )
 
 
-def _send_with_resend(name: str, email: str) -> None:
+def _send_with_resend(name: str, email: str, message: str) -> None:
     api_key = os.environ.get("RESEND_API_KEY", "").strip()
     to_email = os.environ.get("CONTACT_TO_EMAIL", "").strip()
     from_email = os.environ.get(
@@ -231,7 +238,7 @@ def _send_with_resend(name: str, email: str) -> None:
             "to": [to_email],
             "reply_to": email,
             "subject": f"İletişim: {name}",
-            "text": f"Ad soyad: {name}\nE-posta: {email}\n",
+            "text": f"Ad soyad: {name}\nE-posta: {email}\n\nMesaj:\n{message}\n",
         }
     ).encode()
     request = urllib.request.Request(
@@ -270,19 +277,22 @@ def submit_contact(body: ContactRequest, request: Request) -> ContactResponse:
 
     name = _single_line(body.name, 80)
     email = _single_line(body.email, 254).lower()
+    message = _message_text(body.message, 4_000)
     if len(name) < 2:
         raise HTTPException(status_code=400, detail="Ad soyad gerekli.")
     if not EMAIL_PATTERN.fullmatch(email):
         raise HTTPException(status_code=400, detail="Geçerli bir e-posta adresi girin.")
+    if not message:
+        raise HTTPException(status_code=400, detail="Mesaj gerekli.")
 
     api_key = os.environ.get("RESEND_API_KEY", "").strip()
     to_email = os.environ.get("CONTACT_TO_EMAIL", "").strip()
     if not api_key or not to_email:
-        _remember_locally(name, email)
+        _remember_locally(name, email, message)
         return ContactResponse(
             sent=False,
             detail="Mesaj kaydedildi. Resend anahtarı tanımlı olmadığı için e-posta gönderilmedi.",
         )
 
-    _send_with_resend(name, email)
+    _send_with_resend(name, email, message)
     return ContactResponse(sent=True, detail="Mesajınız gönderildi.")
