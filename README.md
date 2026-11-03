@@ -27,7 +27,7 @@ Deneme hesabı: `admin` / `proje2026`
 | `CONTACT_FROM_EMAIL` | `Proje Portalı <onboarding@resend.dev>` |
 | `CORS_ORIGINS` | yerel arayüz adresleri |
 
-Production’da arayüz başka bir adresteyse onu virgülle ekleyin. Sonda `/` olmasın.
+Production’da arayüz başka bir adresteyse onu virgülle ekleyin. Sonda `/` olmasın. `https://*.vercel.app` adresleri ayrıca kabul edilir.
 
 ```bash
 CORS_ORIGINS=https://staj-frontend.up.railway.app
