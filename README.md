@@ -25,5 +25,12 @@ Deneme hesabı: `admin` / `proje2026`
 | `RESEND_API_KEY` | boş |
 | `CONTACT_TO_EMAIL` | boş |
 | `CONTACT_FROM_EMAIL` | `Proje Portalı <onboarding@resend.dev>` |
+| `CORS_ORIGINS` | yerel arayüz adresleri |
+
+Production’da arayüz başka bir adresteyse onu virgülle ekleyin. Sonda `/` olmasın.
+
+```bash
+CORS_ORIGINS=https://staj-frontend.up.railway.app
+```
 
 `RESEND_API_KEY` veya `CONTACT_TO_EMAIL` yoksa iletişim mesajı `data/inbox.json` dosyasına yazılır ve e-posta gönderilmez.

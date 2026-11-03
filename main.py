@@ -28,13 +28,21 @@ SECRET = os.environ.get("AUTH_SECRET", "dev-secret-change-me")
 ADMIN_USER = os.environ.get("ADMIN_USER", "admin")
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "proje2026")
 
+
+def _cors_origins() -> list[str]:
+    origins = ["http://127.0.0.1:43127", "http://localhost:43127"]
+    extra = os.environ.get("CORS_ORIGINS", "")
+    for item in extra.split(","):
+        origin = item.strip().rstrip("/")
+        if origin and origin not in origins:
+            origins.append(origin)
+    return origins
+
+
 app = FastAPI(title="Proje Portalı API")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://127.0.0.1:43127",
-        "http://localhost:43127",
-    ],
+    allow_origins=_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
