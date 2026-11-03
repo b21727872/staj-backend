@@ -1,0 +1,24 @@
+{
+  "sections": [
+    {
+      "slug": "anasayfa",
+      "title": "Anasayfa",
+      "content": "lorem ipsum1"
+    },
+    {
+      "slug": "proje-hakkinda",
+      "title": "Proje Hakkında",
+      "content": "lorem ipsum 4"
+    },
+    {
+      "slug": "proje-ekibi",
+      "title": "Proje Ekibi",
+      "content": "lorem ipsum2"
+    },
+    {
+      "slug": "proje-ciktilari",
+      "title": "Proje Çıktıları",
+      "content": "lorem ipsum 3"
+    }
+  ]
+}
