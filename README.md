@@ -8,7 +8,7 @@ FastAPI servisi. Bölüm içeriklerini verir, yönetim girişini doğrular ve il
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-uvicorn main:app --host 0.0.0.0 --port 8742
+uvicorn main:app --host 0.0.0.0 --port ${PORT:-8742}
 ```
 
 Arayüz `http://127.0.0.1:43127` adresinden `/api` isteklerini bu porta iletir.

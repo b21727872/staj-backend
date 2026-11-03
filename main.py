@@ -144,6 +144,7 @@ def require_user(authorization: str | None = Header(default=None)) -> str:
     return read_token(authorization)
 
 
+@app.get("/")
 @app.get("/api/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
@@ -304,3 +305,13 @@ def submit_contact(body: ContactRequest, request: Request) -> ContactResponse:
 
     _send_with_resend(name, email, message)
     return ContactResponse(sent=True, detail="Mesajınız gönderildi.")
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(
+        app,
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", "8742")),
+    )
