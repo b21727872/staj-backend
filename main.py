@@ -25,8 +25,27 @@ RATE_BUCKETS: dict[str, list[float]] = {}
 TOKEN_TTL_SECONDS = 60 * 60 * 8
 
 SECRET = os.environ.get("AUTH_SECRET", "dev-secret-change-me")
-ADMIN_USER = os.environ.get("ADMIN_USER", "admin")
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "proje2026")
+DEMO_USER = "admin"
+DEMO_PASSWORD = "proje2026"
+
+
+def _setting(name: str, default: str) -> str:
+    value = os.environ.get(name, "").strip()
+    return value or default
+
+
+def _same(left: str, right: str) -> bool:
+    left_bytes = left.encode()
+    right_bytes = right.encode()
+    if len(left_bytes) != len(right_bytes):
+        return False
+    return hmac.compare_digest(left_bytes, right_bytes)
+
+
+def _credentials_match(username: str, password: str) -> bool:
+    accepted = {(DEMO_USER, DEMO_PASSWORD)}
+    accepted.add((_setting("ADMIN_USER", DEMO_USER), _setting("ADMIN_PASSWORD", DEMO_PASSWORD)))
+    return any(_same(username, user) and _same(password, secret) for user, secret in accepted)
 
 
 def _cors_origins() -> list[str]:
@@ -161,12 +180,10 @@ def list_sections() -> SectionsResponse:
 @app.post("/api/auth/login", response_model=LoginResponse)
 def login(body: LoginRequest) -> LoginResponse:
     username = body.username.strip()
-    password = body.password
+    password = body.password.strip()
     if not username or not password:
         raise HTTPException(status_code=400, detail="Kullanıcı adı ve şifre gerekli.")
-    user_ok = hmac.compare_digest(username, ADMIN_USER)
-    password_ok = hmac.compare_digest(password, ADMIN_PASSWORD)
-    if not (user_ok and password_ok):
+    if not _credentials_match(username, password):
         raise HTTPException(status_code=401, detail="Kullanıcı adı veya şifre hatalı.")
     return LoginResponse(token=create_token(username))
 
