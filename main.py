@@ -251,7 +251,7 @@ def _remember_locally(name: str, email: str, message: str) -> None:
         )
 
 
-TEST_INBOX = "alisenol@tarsus.edu.tr"
+TEST_INBOX = "b21727872@cs.hacettepe.edu.tr"
 
 
 def _resend_key() -> str:
@@ -267,7 +267,7 @@ def _send_with_resend(name: str, email: str, message: str) -> None:
     to_email = _contact_to()
     from_email = os.environ.get(
         "CONTACT_FROM_EMAIL",
-        "Proje Portalı <iletisim@pythonmulakat.com>",
+        "Proje Portalı <onboarding@resend.dev>",
     ).strip()
     if not api_key or not to_email:
         raise HTTPException(
