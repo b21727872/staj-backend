@@ -251,9 +251,20 @@ def _remember_locally(name: str, email: str, message: str) -> None:
         )
 
 
+TEST_INBOX = "b21727872@cs.hacettepe.edu.tr"
+
+
+def _resend_key() -> str:
+    return os.environ.get("RESEND_API_KEY", "").strip()
+
+
+def _contact_to() -> str:
+    return os.environ.get("CONTACT_TO_EMAIL", "").strip() or TEST_INBOX
+
+
 def _send_with_resend(name: str, email: str, message: str) -> None:
-    api_key = os.environ.get("RESEND_API_KEY", "").strip()
-    to_email = os.environ.get("CONTACT_TO_EMAIL", "").strip()
+    api_key = _resend_key()
+    to_email = _contact_to()
     from_email = os.environ.get(
         "CONTACT_FROM_EMAIL",
         "Proje Portalı <onboarding@resend.dev>",
@@ -261,7 +272,7 @@ def _send_with_resend(name: str, email: str, message: str) -> None:
     if not api_key or not to_email:
         raise HTTPException(
             status_code=503,
-            detail="Resend yapılandırılmamış. RESEND_API_KEY ve CONTACT_TO_EMAIL gerekli.",
+            detail="Resend yapılandırılmamış. RESEND_API_KEY gerekli.",
         )
 
     payload = json.dumps(
@@ -317,9 +328,8 @@ def submit_contact(body: ContactRequest, request: Request) -> ContactResponse:
     if not message:
         raise HTTPException(status_code=400, detail="Mesaj gerekli.")
 
-    api_key = os.environ.get("RESEND_API_KEY", "").strip()
-    to_email = os.environ.get("CONTACT_TO_EMAIL", "").strip()
-    if not api_key or not to_email:
+    api_key = _resend_key()
+    if not api_key:
         _remember_locally(name, email, message)
         return ContactResponse(
             sent=False,

@@ -23,7 +23,7 @@ Deneme hesabı: `admin` / `proje2026`
 | `ADMIN_PASSWORD` | `proje2026` |
 | `AUTH_SECRET` | `dev-secret-change-me` |
 | `RESEND_API_KEY` | boş |
-| `CONTACT_TO_EMAIL` | boş |
+| `CONTACT_TO_EMAIL` | `b21727872@cs.hacettepe.edu.tr` |
 | `CONTACT_FROM_EMAIL` | `Proje Portalı <onboarding@resend.dev>` |
 | `CORS_ORIGINS` | yerel arayüz adresleri |
 
@@ -35,4 +35,4 @@ Canlı API alan adı `api.alisenol.org` olmalı. Railway panelinde bu domain’i
 CORS_ORIGINS=https://alisenol.org,https://www.alisenol.org
 ```
 
-`RESEND_API_KEY` veya `CONTACT_TO_EMAIL` yoksa iletişim mesajı `data/inbox.json` dosyasına yazılır ve e-posta gönderilmez.
+`RESEND_API_KEY` yoksa iletişim mesajı `data/inbox.json` dosyasına yazılır ve e-posta gönderilmez. Anahtar varsa mesaj backend üzerinden Resend ile `CONTACT_TO_EMAIL` adresine gider. Formdaki e-posta alanı yanıt adresi olarak kalır.
