@@ -23,7 +23,7 @@ Deneme hesabı: `admin` / `proje2026`
 | `ADMIN_PASSWORD` | `proje2026` |
 | `AUTH_SECRET` | `dev-secret-change-me` |
 | `RESEND_API_KEY` | boş |
-| `CONTACT_TO_EMAIL` | `b21727872@cs.hacettepe.edu.tr` |
+| `CONTACT_TO_EMAIL` | `alisenol@tarsus.edu.tr` |
 | `CONTACT_FROM_EMAIL` | `Proje Portalı <onboarding@resend.dev>` |
 | `CORS_ORIGINS` | yerel arayüz adresleri |
 
