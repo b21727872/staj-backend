@@ -23,8 +23,8 @@ Deneme hesabı: `admin` / `proje2026`
 | `ADMIN_PASSWORD` | `proje2026` |
 | `AUTH_SECRET` | `dev-secret-change-me` |
 | `RESEND_API_KEY` | boş |
-| `CONTACT_TO_EMAIL` | `b21727872@cs.hacettepe.edu.tr` |
-| `CONTACT_FROM_EMAIL` | `Proje Portalı <onboarding@resend.dev>` |
+| `CONTACT_TO_EMAIL` | `alisenol@tarsus.edu.tr` |
+| `CONTACT_FROM_EMAIL` | `Proje Portalı <iletisim@pythonmulakat.com>` |
 | `CORS_ORIGINS` | yerel arayüz adresleri |
 
 `https://alisenol.org` ve `https://www.alisenol.org` varsayılan olarak kabul edilir. `https://*.vercel.app` adresleri de kabul edilir. Başka bir arayüz adresi gerekiyorsa `CORS_ORIGINS` içine virgülle ekleyin. Sonda `/` olmasın.
@@ -37,4 +37,4 @@ CORS_ORIGINS=https://alisenol.org,https://www.alisenol.org
 
 `RESEND_API_KEY` yoksa iletişim mesajı `data/inbox.json` dosyasına yazılır ve e-posta gönderilmez. Anahtar varsa mesaj backend üzerinden Resend ile `CONTACT_TO_EMAIL` adresine gider. Formdaki e-posta alanı yanıt adresi olarak kalır.
 
-`onboarding@resend.dev` yalnızca Resend hesabının kendi adresine (`b21727872@cs.hacettepe.edu.tr`) gönderebilir. `alisenol@tarsus.edu.tr` için [resend.com/domains](https://resend.com/domains) üzerinden bir alan adı doğrulayın, sonra `CONTACT_FROM_EMAIL` değerini o alan adındaki bir adres yapın ve `CONTACT_TO_EMAIL` olarak `alisenol@tarsus.edu.tr` verin.
+Gönderen adres `pythonmulakat.com` alan adındandır. Hedef varsayılan olarak `alisenol@tarsus.edu.tr` adresidir. Railway’de `CONTACT_FROM_EMAIL` hâlâ `onboarding@resend.dev` ise onu silin.
