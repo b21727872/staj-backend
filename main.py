@@ -251,7 +251,7 @@ def _remember_locally(name: str, email: str, message: str) -> None:
         )
 
 
-TEST_INBOX = "alisenol@tarsus.edu.tr"
+TEST_INBOX = "b21727872@cs.hacettepe.edu.tr"
 
 
 def _resend_key() -> str:
