@@ -27,10 +27,12 @@ Deneme hesabı: `admin` / `proje2026`
 | `CONTACT_FROM_EMAIL` | `Proje Portalı <onboarding@resend.dev>` |
 | `CORS_ORIGINS` | yerel arayüz adresleri |
 
-Production’da arayüz başka bir adresteyse onu virgülle ekleyin. Sonda `/` olmasın. `https://*.vercel.app` adresleri ayrıca kabul edilir.
+`https://alisenol.org` ve `https://www.alisenol.org` varsayılan olarak kabul edilir. `https://*.vercel.app` adresleri de kabul edilir. Başka bir arayüz adresi gerekiyorsa `CORS_ORIGINS` içine virgülle ekleyin. Sonda `/` olmasın.
+
+Canlı API alan adı `api.alisenol.org` olmalı. Railway panelinde bu domain’i backend servisine ekleyin ve DNS kaydını Railway’in gösterdiği hedefe yönlendirin.
 
 ```bash
-CORS_ORIGINS=https://staj-frontend.up.railway.app
+CORS_ORIGINS=https://alisenol.org,https://www.alisenol.org
 ```
 
 `RESEND_API_KEY` veya `CONTACT_TO_EMAIL` yoksa iletişim mesajı `data/inbox.json` dosyasına yazılır ve e-posta gönderilmez.

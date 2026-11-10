@@ -49,7 +49,12 @@ def _credentials_match(username: str, password: str) -> bool:
 
 
 def _cors_origins() -> list[str]:
-    origins = ["http://127.0.0.1:43127", "http://localhost:43127"]
+    origins = [
+        "http://127.0.0.1:43127",
+        "http://localhost:43127",
+        "https://alisenol.org",
+        "https://www.alisenol.org",
+    ]
     extra = os.environ.get("CORS_ORIGINS", "")
     for item in extra.split(","):
         origin = item.strip().rstrip("/")
